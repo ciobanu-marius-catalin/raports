@@ -10,10 +10,9 @@
       display: flex;
       flex: 1 0 0;
       justify-content: flex-end;
-
-       > * {
-         max-width: 118px;
-       }
+      > .mvp-control:not(:last-child) {
+        margin-right: 23px;
+      }
     }
   }
 

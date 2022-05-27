@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import ReactSelect from 'react-select';
+import ReactSelect, { components } from 'react-select';
+import { DownArrow } from '@icons';
 
-interface OptionInterface {
+export interface OptionInterface {
   label: string;
   value: string;
 }
@@ -12,9 +13,24 @@ interface Props {
   onChange: Function;
 }
 
+const DropdownIndicator = (props) => {
+  return (
+    <components.DropdownIndicator {...props}>
+      <DownArrow />
+    </components.DropdownIndicator>
+  );
+};
+
 const Select: FC<Props> = (props) => {
   // @ts-ignore
-  return <ReactSelect {...props} />;
+  return (
+    <ReactSelect
+      className="mvp-control mvp-control-select"
+      classNamePrefix="mvp-control-select"
+      components={{ DropdownIndicator }}
+      {...props}
+    />
+  );
 };
 
 export { Select };

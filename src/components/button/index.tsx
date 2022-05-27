@@ -6,7 +6,11 @@ interface PropsInterface {
 }
 // @ts-ignore
 const Button: FC<PropsInterface> = ({ children, ...props }) => {
-  return <button {...props}>{children}</button>;
+  return (
+    <button className="mvp-control mvp-control-button" {...props}>
+      {children}
+    </button>
+  );
 };
 
 export { Button };

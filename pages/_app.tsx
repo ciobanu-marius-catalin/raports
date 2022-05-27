@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { UserContextProvider } from '@store';
 import { ErrorCatcher } from '@core';
 import '../src/style.scss';
@@ -17,7 +17,6 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
-
   return (
     <AppWithStore>{getLayout(<Component {...pageProps} />)} </AppWithStore>
   );

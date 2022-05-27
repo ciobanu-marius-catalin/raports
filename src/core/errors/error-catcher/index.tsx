@@ -36,6 +36,7 @@ const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const setError = useCallback(
     (e: any) => {
+      console.error(e);
       const response = e?.response;
       const data = response?.data;
       const newError: ErrorInterface = {
