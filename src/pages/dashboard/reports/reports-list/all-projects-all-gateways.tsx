@@ -3,36 +3,19 @@ import { useDeepMemo } from '@core';
 import { ReportsAccordion } from '../reports-accordion';
 import { ReportTitle } from './report-title';
 import { useGetGroupedData } from './use-get-grouped-data';
+import { columnsNamesWithGateway } from './config';
 
 const AllProjectsAllGateways = () => {
   const { groupedReports, totalSum } = useGetGroupedData({
     groupByKey: 'projectId',
   });
-  const columnsNames = [
-    {
-      label: 'Date',
-      value: 'created',
-    },
-    {
-      label: 'Gateway',
-      value: 'gateway.name',
-    },
-    {
-      label: 'Transaction ID',
-      value: 'paymentId',
-    },
-    {
-      label: 'Amount',
-      value: 'amount',
-    },
-  ];
 
   return (
     <div>
       <Card className="margin-bottom-large">
         <ReportTitle />
         <ReportsAccordion
-          columnsNames={columnsNames}
+          columnsNames={columnsNamesWithGateway}
           groupedReports={groupedReports}
         />
       </Card>
