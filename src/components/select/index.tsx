@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import ReactSelect, { components } from 'react-select';
 import { DownArrow } from '@icons';
+import { useDeepMemo } from '@core';
 
 export interface OptionInterface {
   label: string;
@@ -22,6 +23,16 @@ const DropdownIndicator = (props) => {
 };
 
 const Select: FC<Props> = (props) => {
+  const { onChange, options, value } = props;
+  const onInternalChange = useCallback(
+    (newValue: OptionInterface) => {
+      onChange(newValue.value);
+    },
+    [onChange]
+  );
+  const internalValue = useDeepMemo(() => {
+    return options.find((option) => option.value === value);
+  }, [value, options]);
   // @ts-ignore
   return (
     <ReactSelect
@@ -29,6 +40,8 @@ const Select: FC<Props> = (props) => {
       classNamePrefix="mvp-control-select"
       components={{ DropdownIndicator }}
       {...props}
+      onChange={onInternalChange}
+      value={internalValue}
     />
   );
 };

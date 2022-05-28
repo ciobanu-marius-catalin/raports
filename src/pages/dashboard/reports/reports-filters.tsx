@@ -1,25 +1,13 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo } from 'react';
 import { Button, DatePicker, Select } from '@components';
 import { useReportsData } from './reports-data-context';
-import { useLoadProjects } from './use-load-projects';
-import { useLoadGateways } from './use-load-gateways';
-
+import { useProjectsContext, useGatewaysContext } from '@store';
 
 const ReportsFilters: FC = () => {
-  const {
-    project,
-    setProject,
-    gateway,
-    setGateway,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    loadReports,
-  } = useReportsData();
+  const { getFilter, setFilter, loadReports } = useReportsData();
 
-  const projectOptions = useLoadProjects();
-  const gatewayOptions = useLoadGateways();
+  const { options: projectOptions, items } = useProjectsContext();
+  const { options: gatewayOptions } = useGatewaysContext();
 
   const commonDateProps = useMemo(() => {
     const minDate = new Date('2021-01-01');
@@ -32,30 +20,30 @@ const ReportsFilters: FC = () => {
   return (
     <div className="mvp-pages-reports__header__filters">
       <Select
-        value={project}
-        onChange={setProject}
+        value={getFilter('project')}
+        onChange={setFilter('project')}
         options={projectOptions}
         placeholder="Select project"
       />
       <Select
-        value={gateway}
-        onChange={setGateway}
+        value={getFilter('gateway')}
+        onChange={setFilter('gateway')}
         options={gatewayOptions}
         placeholder="Select gateway"
       />
       <DatePicker
-        value={startDate}
-        onChange={setStartDate}
+        value={getFilter('startDate')}
+        onChange={setFilter('startDate')}
         placeholderText="From date"
         {...commonDateProps}
-        openToDate={commonDateProps.minDate}
+        placeholderOpenToDate={commonDateProps.minDate}
       />
       <DatePicker
-        value={endDate}
-        onChange={setEndDate}
+        value={getFilter('endDate')}
+        onChange={setFilter('endDate')}
         placeholderText="To date"
         {...commonDateProps}
-        openToDate={commonDateProps.maxDate}
+        placeholderOpenToDate={commonDateProps.maxDate}
       />
       <Button onClick={loadReports}>Generate report</Button>
     </div>

@@ -1,18 +1,14 @@
 import { useCallback, useMemo } from 'react';
 import { axios } from '@core';
-import { UserInterface, UserRepositoryGetItemInterface } from '@repositories';
 
 export interface ReportsInterface {
-  // projectId: string;
+  projectId: string;
+  gatewayId: string;
   userIds: string[];
-  // rule: string;
-  // gatewaysIds: string[];
-  // structure: string;
-  // industry: string;
-  // website: string;
-  // description: string;
-  // image: string;
-  // name: string;
+  amount: number;
+  created: string;
+  modified: string;
+  paymentId: string;
 }
 
 export interface ReportsRequestParamInterface {
@@ -23,21 +19,21 @@ export interface ReportsRequestParamInterface {
 }
 export type ReportsRepositoryGetReportsInterface = (
   data: ReportsRequestParamInterface
-) => Promise<{
-  data: {
-    data: ReportsInterface;
-  };
-}>;
+) => Promise<ReportsInterface>;
 
 export interface ReportsRepositoryInterface {
   getReports: ReportsRepositoryGetReportsInterface;
 }
 
 function useReportsRepository(): ReportsRepositoryInterface {
-  const getReports = useCallback(async (data): Promise<ReportsInterface[]> => {
-    const item = await axios.post('/reports', data);
-    return item?.data?.data || [];
-  }, []);
+  const getReports = useCallback(
+    async (data: ReportsRequestParamInterface): Promise<ReportsInterface[]> => {
+      const item = await axios.post('/report', data);
+      const reports: ReportsInterface[] = item?.data?.data || [];
+      return reports;
+    },
+    []
+  );
 
   const routes: ReportsRepositoryInterface = useMemo(() => {
     return {

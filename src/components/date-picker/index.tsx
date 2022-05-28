@@ -1,13 +1,19 @@
 import ReactDatePicker from 'react-datepicker';
 import { FC } from 'react';
-import { DatePicker as DatePickerIcon} from '@icons';
+import { DatePicker as DatePickerIcon } from '@icons';
 interface Props {
   value: Date | undefined;
   onChange: Function;
   [key: string]: any;
 }
 
-const DatePicker: FC<Props> = ({ value, onChange, ...props }) => {
+const DatePicker: FC<Props> = ({
+  value,
+  onChange,
+  placeholderOpenToDate,
+  ...props
+}) => {
+  const openToDate = value ? value : placeholderOpenToDate;
   // @ts-ignore
   return (
     <div className="mvp-control mvp-control-date__wrapper">
@@ -16,6 +22,7 @@ const DatePicker: FC<Props> = ({ value, onChange, ...props }) => {
         onChange={onChange}
         type="button"
         wrapperClassName="mvp-control mvp-control-date"
+        openToDate={openToDate}
         {...props}
       />
       <DatePickerIcon />
