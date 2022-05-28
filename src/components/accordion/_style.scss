@@ -1,0 +1,16 @@
+.mvp-control-accordion {
+    .accordion__button {
+        background: white;
+        color: var(--mvp-primary-color);
+        font-weight: 700;
+        &::before {
+            display: none;
+        }
+    }
+    .accordion__item + .accordion__item {
+        border: none;
+    }
+    .accordion__item:not(:last-child) {
+        margin-bottom: 5px;
+    }
+}

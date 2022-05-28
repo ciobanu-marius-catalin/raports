@@ -4,6 +4,7 @@ import { useErrorCatcher, ALL_ITEMS_VALUE, useDeepMemo } from '@core';
 import { useGatewaysRepository } from '@repositories';
 import type { OptionInterface } from '@components';
 import type { GatewayContextInterface } from './index';
+import _ from 'lodash';
 
 const useLoadGateways = () => {
   const { setError } = useErrorCatcher();
@@ -49,14 +50,18 @@ const useLoadGateways = () => {
     return labelsByValues;
   }, [gatewayOptions]);
 
+  const itemsByValue = useDeepMemo(() => {
+    return _.keyBy(gateways, (item) => item.gatewayId);
+  }, [gateways]);
 
   const data: GatewayContextInterface = useDeepMemo(() => {
     return {
       labelsByValues,
+      itemsByValue,
       items: gateways,
       options: gatewayOptions,
     };
-  }, [gateways, gatewayOptions, labelsByValues]);
+  }, [gateways, gatewayOptions, labelsByValues, itemsByValue]);
 
   return data;
 };

@@ -5,6 +5,7 @@ import { useProjectsRepository } from '@repositories';
 import type { OptionInterface } from '@components';
 import { ALL_ITEMS_VALUE } from '@core';
 import type { ProjectContextInterface } from './index';
+import _ from "lodash";
 
 const useLoadProjects = () => {
   const { setError } = useErrorCatcher();
@@ -50,13 +51,18 @@ const useLoadProjects = () => {
     return labelsByValues;
   }, [projectOptions]);
 
+  const itemsByValue = useDeepMemo(() => {
+    return _.keyBy(projects, (item) => item.projectId);
+  }, [projects]);
+
   const data: ProjectContextInterface = useDeepMemo(() => {
     return {
+      itemsByValue,
       items: projects,
       options: projectOptions,
       labelsByValues,
     };
-  }, [projects, projectOptions, labelsByValues]);
+  }, [projects, projectOptions, labelsByValues, itemsByValue]);
 
   return data;
 };

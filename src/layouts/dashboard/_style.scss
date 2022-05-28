@@ -38,6 +38,7 @@
     flex: 1 0 0;
     padding-top: 30px;
     display: flex;
+    max-height: calc(100vh - 80px - 30px - 66px);
   }
 
   &__sidebar {
@@ -78,6 +79,7 @@
   &__content {
     flex: 1 0 0;
     padding-right: var(--horizontal-spacing);
+    overflow-y: auto;
   }
 
 }

@@ -14,9 +14,10 @@ import type {
   ReportsInterface,
   ReportsRequestParamInterface,
 } from '@repositories';
-import { useErrorCatcher } from '@core';
+import { useDeepCallback, useErrorCatcher } from '@core';
 import { ALL_ITEMS_VALUE } from './config';
 import moment from 'moment';
+import { useGatewaysContext, useProjectsContext } from '@store';
 
 interface ReportsDataInterface {
   filters: FiltersInterface;
@@ -73,6 +74,8 @@ const ReportsDataProvider: FC<PropsInterface> = ({ children }) => {
   const [activeFilters, setActiveFilters] =
     useState<FiltersInterface>(defaultFilters);
 
+  const { itemsByValue: gatewayItemsByValue } = useGatewaysContext();
+  const { itemsByValue: projectItemsByValue } = useProjectsContext();
   const { setError } = useErrorCatcher();
 
   const setFilter = useCallback(
@@ -128,7 +131,7 @@ const ReportsDataProvider: FC<PropsInterface> = ({ children }) => {
 
   const reportsRepository = useReportsRepository();
 
-  const loadReports = useCallback(async () => {
+  const loadReports = useDeepCallback(async () => {
     try {
       const filtersWithDefault: FiltersInterface = getFiltersWithDefault();
       const paramsFromFilters: ReportsRequestParamInterface =
@@ -137,8 +140,14 @@ const ReportsDataProvider: FC<PropsInterface> = ({ children }) => {
       const items: ReportsInterface[] = await reportsRepository.getReports(
         paramsFromFilters
       );
+
       if (!_.isEmpty(items)) {
-        setReports(items);
+        const formattedItems = formatReports({
+          reports: items,
+          gatewayItemsByValue,
+          projectItemsByValue,
+        });
+        setReports(formattedItems);
       }
 
       //set what filters are active;
@@ -147,6 +156,8 @@ const ReportsDataProvider: FC<PropsInterface> = ({ children }) => {
       setError(e);
     }
   }, [
+    gatewayItemsByValue,
+    projectItemsByValue,
     getReportsParamsFromFilters,
     getFiltersWithDefault,
     reportsRepository,
@@ -185,4 +196,29 @@ const ReportsDataProvider: FC<PropsInterface> = ({ children }) => {
 const useReportsData = (): ReportsDataInterface => {
   return useContext(ReportsDataContext);
 };
+export interface ReportsInterface {
+  projectId: string;
+  gatewayId: string;
+  userIds: string[];
+  amount: number;
+  created: string;
+  modified: string;
+  paymentId: string;
+}
+function formatReports({
+  reports = [],
+  gatewayItemsByValue = {},
+  projectItemsByValue = {},
+}) {
+  return reports.map((item: ReportsInterface) => {
+    return {
+      ...item,
+      created: moment(item?.created).format('DD/MM/YYYY'),
+      amount: Math.round(item?.amount),
+      gateway: _.get(gatewayItemsByValue, item.gatewayId),
+      project: _.get(projectItemsByValue, item.projectId),
+    };
+  });
+}
+
 export { ReportsDataProvider, useReportsData };
