@@ -1,5 +1,42 @@
+import { Card } from '@components';
+import { useDeepMemo } from '@core';
+import { ReportsAccordion } from '../reports-accordion';
+import { ReportTitle } from './report-title';
+import { useGetGroupedData } from './use-get-grouped-data';
+
 const AllProjectsOneGateway = () => {
-  return <h1>All projects one gateway</h1>;
+  const { groupedReports, totalSum } = useGetGroupedData({
+    groupByKey: 'projectId',
+  });
+  const columnsNames = [
+    {
+      label: 'Date',
+      value: 'created',
+    },
+    {
+      label: 'Transaction ID',
+      value: 'paymentId',
+    },
+    {
+      label: 'Amount',
+      value: 'amount',
+    },
+  ];
+
+  return (
+    <div>
+      <Card className="margin-bottom-large">
+        <ReportTitle />
+        <ReportsAccordion
+          columnsNames={columnsNames}
+          groupedReports={groupedReports}
+        />
+      </Card>
+      <Card>
+        <span className="bold-text ">Total: {totalSum} USD</span>
+      </Card>
+    </div>
+  );
 };
 
 export { AllProjectsOneGateway };

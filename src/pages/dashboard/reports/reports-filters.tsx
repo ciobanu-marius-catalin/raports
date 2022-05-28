@@ -2,10 +2,12 @@ import { FC, useMemo } from 'react';
 import { Button, DatePicker, Select } from '@components';
 import { useReportsData } from './reports-data-context';
 import { useProjectsContext, useGatewaysContext } from '@store';
+import _ from 'lodash';
 
 const ReportsFilters: FC = () => {
   const { getFilter, setFilter, loadReports } = useReportsData();
-
+  const startDate = getFilter('startDate');
+  const endDate = getFilter('endDate');
   const { options: projectOptions, items } = useProjectsContext();
   const { options: gatewayOptions } = useGatewaysContext();
 
@@ -17,6 +19,20 @@ const ReportsFilters: FC = () => {
       maxDate,
     };
   }, []);
+
+  const startDateProps = useMemo(() => {
+    return {
+      minDate: commonDateProps.minDate,
+      maxDate: endDate ? endDate : commonDateProps.maxDate,
+    };
+  }, [commonDateProps, endDate]);
+
+  const endDateProps = useMemo(() => {
+    return {
+      minDate: startDate ? startDate : commonDateProps.minDate,
+      maxDate: commonDateProps.maxDate,
+    };
+  }, [commonDateProps, startDate]);
   return (
     <div className="mvp-pages-reports__header__filters">
       <Select
@@ -35,14 +51,14 @@ const ReportsFilters: FC = () => {
         value={getFilter('startDate')}
         onChange={setFilter('startDate')}
         placeholderText="From date"
-        {...commonDateProps}
+        {...startDateProps}
         placeholderOpenToDate={commonDateProps.minDate}
       />
       <DatePicker
         value={getFilter('endDate')}
         onChange={setFilter('endDate')}
         placeholderText="To date"
-        {...commonDateProps}
+        {...endDateProps}
         placeholderOpenToDate={commonDateProps.maxDate}
       />
       <Button onClick={loadReports}>Generate report</Button>

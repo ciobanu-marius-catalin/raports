@@ -141,7 +141,7 @@ const ReportsDataProvider: FC<PropsInterface> = ({ children }) => {
         paramsFromFilters
       );
 
-      if (!_.isEmpty(items)) {
+      if (Array.isArray(items)) {
         const formattedItems = formatReports({
           reports: items,
           gatewayItemsByValue,
