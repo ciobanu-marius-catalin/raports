@@ -54,7 +54,7 @@ const useGetGroupedData = ({ groupByKey }) => {
       group.amount = groupSum;
     });
     return sortedGroups;
-  }, reportsByGroupObj);
+  }, [reportsByGroupObj]);
 
   const totalSum = useDeepMemo(() => {
     let totalSum = 0;

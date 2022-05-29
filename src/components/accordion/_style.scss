@@ -13,4 +13,8 @@
     .accordion__item:not(:last-child) {
         margin-bottom: 5px;
     }
+    .accordion__panel {
+        max-height: 350px;
+        overflow-y: auto;
+    }
 }

@@ -11,7 +11,7 @@ const AllProjectsAllGateways = () => {
   });
 
   return (
-    <div>
+    <>
       <Card className="margin-bottom-large">
         <ReportTitle />
         <ReportsAccordion
@@ -22,7 +22,7 @@ const AllProjectsAllGateways = () => {
       <Card>
         <span className="bold-text ">Total: {totalSum} USD</span>
       </Card>
-    </div>
+    </>
   );
 };
 

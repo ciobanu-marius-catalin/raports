@@ -15,8 +15,8 @@ const ReportsTable = ({ items = [], columnsNames = [] }) => {
         </tr>
       </thead>
       <tbody>
-        {items.map((item) => (
-          <tr key={item?.value}>
+        {items.map((item, index) => (
+          <tr key={index}>
             {columnsNames.map(({ value: columnName }) => {
               const cellValue = _.get(item, columnName);
               const formattedCellValue = formatTableCell(columnName, cellValue);

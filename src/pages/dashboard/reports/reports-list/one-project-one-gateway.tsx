@@ -4,25 +4,29 @@ import { ReportsAccordion } from '../reports-accordion';
 import { ReportTitle } from './report-title';
 import { useGetGroupedData } from './use-get-grouped-data';
 import { columnsNamesWithoutGateway } from './config';
+import { ReportsTable } from '../reports-table';
+import _ from 'lodash';
 
 const OneProjectOneGateway = () => {
   const { groupedReports, totalSum } = useGetGroupedData({
     groupByKey: 'gatewayId',
   });
 
+  const reports = _.get(groupedReports, [0, 'items'], []);
+
   return (
-    <div>
+    <>
       <Card className="margin-bottom-large">
         <ReportTitle />
-        <ReportsAccordion
+        <ReportsTable
+          items={reports}
           columnsNames={columnsNamesWithoutGateway}
-          groupedReports={groupedReports}
         />
       </Card>
       <Card>
         <span className="bold-text ">Total: {totalSum} USD</span>
       </Card>
-    </div>
+    </>
   );
 };
 
