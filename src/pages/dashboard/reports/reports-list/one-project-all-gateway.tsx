@@ -1,7 +1,3 @@
-import { Card } from '@components';
-
-import { ReportsAccordion } from '../reports-accordion';
-import { ReportTitle } from './report-title';
 import { useGetGroupedData } from './use-get-grouped-data';
 import { columnsNamesWithoutGateway } from './config';
 import { ReportsWithPieChart } from './reports-with-pie-chart';

@@ -74,8 +74,17 @@ const ReportsWithPieChart: FC<ReportsWithPieChartParamsInterface> = ({
   );
 };
 
-function ChartLegend({ groupedReports = [] }) {
-  const data = useDeepMemo(() => {
+interface ChartLegendInterface {
+  label: string;
+  color: string;
+}
+
+function ChartLegend({
+  groupedReports = [],
+}: {
+  groupedReports: GroupedReportsInterface[];
+}) {
+  const data: ChartLegendInterface[] = useDeepMemo(() => {
     return groupedReports.map((groupReport, index) => {
       return {
         color: _.get(chartColors, index),
@@ -93,7 +102,7 @@ function ChartLegend({ groupedReports = [] }) {
   );
 }
 
-function ChartLegendItem({ label, color }) {
+function ChartLegendItem({ label, color }: ChartLegendInterface) {
   const colorStyle = {
     backgroundColor: color,
   };

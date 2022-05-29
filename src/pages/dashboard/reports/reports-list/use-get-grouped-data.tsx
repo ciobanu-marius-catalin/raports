@@ -20,12 +20,16 @@ export interface GroupedDataInterface {
   groupedReports: GroupedReportsInterface[];
 }
 
+interface ReportsByGroupObjType {
+  [key: string]: GroupedReportsInterface;
+}
+
 const useGetGroupedData = ({ groupByKey }: Params): GroupedDataInterface => {
   const { reports }: ReportsDataInterface = useReportsData();
 
   const objectUsedForGroup = groupByKey === 'projectId' ? 'project' : 'gateway';
 
-  const reportsByGroupObj = useDeepMemo(() => {
+  const reportsByGroupObj: ReportsByGroupObjType = useDeepMemo(() => {
     const groupedData = {};
 
     const addItem = (groupValue: string, item: ReportsInterface) => {
