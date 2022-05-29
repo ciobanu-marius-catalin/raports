@@ -23,6 +23,7 @@ const DatePicker: FC<Props> = ({
         type="button"
         wrapperClassName="mvp-control mvp-control-date"
         openToDate={openToDate}
+        dateFormat="dd/MM/yyyy"
         {...props}
       />
       <DatePickerIcon />
