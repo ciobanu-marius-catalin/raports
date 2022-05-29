@@ -1,8 +1,19 @@
 import { useDeepMemo } from '@core';
 import _ from 'lodash';
+import { ReportsInterface } from '@repositories';
+import { OptionInterface } from '@components';
+import { FC } from 'react';
 
-const ReportsTable = ({ items = [], columnsNames = [] }) => {
-  const columnNamesLabels = useDeepMemo(() => {
+interface ReportsTableParamsInterface {
+  items: ReportsInterface[];
+  columnsNames: OptionInterface[];
+}
+
+const ReportsTable: FC<ReportsTableParamsInterface> = ({
+  items = [],
+  columnsNames = [],
+}) => {
+  const columnNamesLabels: string[] = useDeepMemo(() => {
     return columnsNames.map((item) => item.label);
   }, [columnsNames]);
   return (

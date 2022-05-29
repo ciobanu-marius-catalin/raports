@@ -4,8 +4,8 @@ import _ from 'lodash';
 
 const ReportTitle = () => {
   const { activeFilters } = useReportsData();
-  const { labelsByValues: projectLabelsByValue } = useProjectsContext();
-  const { labelsByValues: gatewayLabelsByValue } = useGatewaysContext();
+  const { labelsByValue: projectLabelsByValue } = useProjectsContext();
+  const { labelsByValue: gatewayLabelsByValue } = useGatewaysContext();
   const { project, gateway } = activeFilters;
   const projectLabel = _.get(projectLabelsByValue, project);
   const gatewayLabel = _.get(gatewayLabelsByValue, gateway);

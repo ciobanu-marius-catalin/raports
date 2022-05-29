@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { axios } from '@core';
+import { ProjectInterface } from '../projects';
+import { GatewayInterface } from '../gateways';
 
 export interface ReportsInterface {
   projectId: string;
@@ -9,6 +11,8 @@ export interface ReportsInterface {
   created: string;
   modified: string;
   paymentId: string;
+  project?: ProjectInterface;
+  gateway?: GatewayInterface;
 }
 
 export interface ReportsRequestParamInterface {

@@ -1,4 +1,4 @@
-import {Exception} from "sass";
+import { Exception } from 'sass';
 
 const EmptyContent = () => {
   return (

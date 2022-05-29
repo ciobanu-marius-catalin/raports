@@ -1,17 +1,15 @@
 import React from 'react';
 
-import {
-  Accordion as ReactAccordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion';
+import { Accordion as ReactAccordion } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 
 const Accordion = ({ children }) => {
   return (
-    <ReactAccordion className="mvp-control mvp-control-accordion">
+    <ReactAccordion
+      className="mvp-control mvp-control-accordion"
+      preExpanded={[0]}
+      allowZeroExpanded={true}
+    >
       {children}
       {/*<AccordionItem>*/}
       {/*  <AccordionItemHeading>*/}

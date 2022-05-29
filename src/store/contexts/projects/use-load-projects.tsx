@@ -42,13 +42,13 @@ const useLoadProjects = () => {
     loadProjects();
   }, []);
 
-  const labelsByValues = useDeepMemo(() => {
-    const labelsByValues = {};
+  const labelsByValue = useDeepMemo(() => {
+    const labelsByValue = {};
     projectOptions.forEach((item) => {
       // @ts-ignore
-      labelsByValues[item.value] = item.label;
+      labelsByValue[item.value] = item.label;
     });
-    return labelsByValues;
+    return labelsByValue;
   }, [projectOptions]);
 
   const itemsByValue = useDeepMemo(() => {
@@ -60,9 +60,9 @@ const useLoadProjects = () => {
       itemsByValue,
       items: projects,
       options: projectOptions,
-      labelsByValues,
+      labelsByValue,
     };
-  }, [projects, projectOptions, labelsByValues, itemsByValue]);
+  }, [projects, projectOptions, labelsByValue, itemsByValue]);
 
   return data;
 };

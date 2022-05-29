@@ -6,11 +6,15 @@ import { useLoadProjects } from './use-load-projects';
 export interface ProjectContextInterface {
   items: ProjectInterface[];
   options: OptionInterface[];
+  itemsByValue: object;
+  labelsByValue: object;
 }
 
 const defaultContextValue: ProjectContextInterface = {
   items: [],
   options: [],
+  itemsByValue: {},
+  labelsByValue: {},
 };
 
 const ProjectContext = React.createContext(defaultContextValue);

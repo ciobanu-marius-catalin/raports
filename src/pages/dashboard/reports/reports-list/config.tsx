@@ -1,4 +1,6 @@
-const columnsNamesWithGateway = [
+import type { OptionInterface } from '@components';
+
+const columnsNamesWithGateway: OptionInterface[] = [
   {
     label: 'Date',
     value: 'created',
@@ -16,6 +18,9 @@ const columnsNamesWithGateway = [
     value: 'amount',
   },
 ];
+
+const columnsNamesWithoutGateway: OptionInterface[] =
+  columnsNamesWithGateway.filter((item) => item.value !== 'gateway.name');
 
 //colors used by google charts
 const chartColors = [
@@ -51,9 +56,5 @@ const chartColors = [
   '#0c5922',
   '#743411',
 ];
-
-const columnsNamesWithoutGateway = columnsNamesWithGateway.filter(
-  (item) => item.value !== 'gateway.name'
-);
 
 export { columnsNamesWithGateway, columnsNamesWithoutGateway, chartColors };

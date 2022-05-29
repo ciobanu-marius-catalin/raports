@@ -1,4 +1,4 @@
-import { Card } from '@components';
+import { Card, OptionInterface } from '@components';
 import { ReportsAccordion } from '../reports-accordion';
 import { ReportTitle } from './report-title';
 import { Chart } from 'react-google-charts';
@@ -6,14 +6,22 @@ import { chartColors } from './config';
 import { useDeepMemo } from '@core';
 import _ from 'lodash';
 import { useWindowWidth } from '@react-hook/window-size';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { GroupedReportsInterface } from './use-get-grouped-data';
 
 const options = {
   colors: chartColors,
   legend: 'none',
 };
 
-const ReportsWithPieChart = ({
+interface ReportsWithPieChartParamsInterface {
+  groupedReports: GroupedReportsInterface[];
+  totalSum: number;
+  columnsNames: OptionInterface[];
+  totalLabel: string;
+}
+
+const ReportsWithPieChart: FC<ReportsWithPieChartParamsInterface> = ({
   groupedReports,
   totalSum,
   columnsNames,
@@ -29,7 +37,6 @@ const ReportsWithPieChart = ({
   }, [groupedReports]);
 
   const windowWidth = useWindowWidth();
-
 
   //the google chart does not handle ok window resizes. We force a rerender when this happens
   useEffect(() => {

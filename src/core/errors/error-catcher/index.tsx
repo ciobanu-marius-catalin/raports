@@ -44,7 +44,8 @@ const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
       const data = response?.data;
       const newError: ErrorInterface = {
         statusCode: response?.status,
-        errorMessage: data?.error || 'Something went wrong, please try again later',
+        errorMessage:
+          data?.error || 'Something went wrong, please try again later',
       };
       setInternalError(newError);
     },

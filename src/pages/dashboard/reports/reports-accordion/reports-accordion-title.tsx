@@ -5,8 +5,14 @@ import {
   AccordionItemButton,
   AccordionItemPanel,
 } from 'react-accessible-accordion';
+import { FC } from 'react';
 
-const ReportsAccordionTitle = ({ label, total }) => {
+interface Props {
+  label: string;
+  total: number | undefined;
+}
+
+const ReportsAccordionTitle: FC<Props> = ({ label, total }) => {
   return (
     <AccordionItemHeading>
       <AccordionItemButton>

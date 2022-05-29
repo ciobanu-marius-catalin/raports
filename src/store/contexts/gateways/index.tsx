@@ -6,11 +6,15 @@ import { useLoadGateways } from './use-load-gateways';
 export interface GatewayContextInterface {
   items: ProjectInterface[];
   options: OptionInterface[];
+  itemsByValue: object;
+  labelsByValue: object;
 }
 
 const defaultContextValue: GatewayContextInterface = {
   items: [],
   options: [],
+  itemsByValue: {},
+  labelsByValue: {},
 };
 
 const GatewayContext = React.createContext(defaultContextValue);

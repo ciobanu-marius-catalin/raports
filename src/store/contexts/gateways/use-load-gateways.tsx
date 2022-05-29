@@ -41,13 +41,13 @@ const useLoadGateways = () => {
     loadGateways();
   }, []);
 
-  const labelsByValues = useDeepMemo(() => {
-    const labelsByValues = {};
+  const labelsByValue = useDeepMemo(() => {
+    const labelsByValue = {};
     gatewayOptions.forEach((item) => {
       // @ts-ignore
-      labelsByValues[item.value] = item.label;
+      labelsByValue[item.value] = item.label;
     });
-    return labelsByValues;
+    return labelsByValue;
   }, [gatewayOptions]);
 
   const itemsByValue = useDeepMemo(() => {
@@ -56,12 +56,12 @@ const useLoadGateways = () => {
 
   const data: GatewayContextInterface = useDeepMemo(() => {
     return {
-      labelsByValues,
+      labelsByValue,
       itemsByValue,
       items: gateways,
       options: gatewayOptions,
     };
-  }, [gateways, gatewayOptions, labelsByValues, itemsByValue]);
+  }, [gateways, gatewayOptions, labelsByValue, itemsByValue]);
 
   return data;
 };

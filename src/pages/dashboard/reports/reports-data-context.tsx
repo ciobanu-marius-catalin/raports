@@ -19,12 +19,12 @@ import { ALL_ITEMS_VALUE } from './config';
 import moment from 'moment';
 import { useGatewaysContext, useProjectsContext } from '@store';
 
-interface ReportsDataInterface {
+export interface ReportsDataInterface {
   filters: FiltersInterface;
   activeFilters: FiltersInterface;
   getFilter: Function;
   setFilter: Function;
-  reports: object[];
+  reports: ReportsInterface[];
   setReports: Function;
   loadReports: Function;
 }
@@ -33,7 +33,7 @@ interface PropsInterface {
   children: ReactNode;
 }
 
-interface FiltersInterface {
+export interface FiltersInterface {
   project: string | undefined;
   gateway: string | undefined;
   startDate: Date | undefined;
@@ -196,20 +196,17 @@ const ReportsDataProvider: FC<PropsInterface> = ({ children }) => {
 const useReportsData = (): ReportsDataInterface => {
   return useContext(ReportsDataContext);
 };
-export interface ReportsInterface {
-  projectId: string;
-  gatewayId: string;
-  userIds: string[];
-  amount: number;
-  created: string;
-  modified: string;
-  paymentId: string;
+
+interface FormatReportsParamsInterface {
+  reports: ReportsInterface[];
+  gatewayItemsByValue: object;
+  projectItemsByValue: object;
 }
 function formatReports({
   reports = [],
   gatewayItemsByValue = {},
   projectItemsByValue = {},
-}) {
+}: FormatReportsParamsInterface): ReportsInterface[] {
   return reports.map((item: ReportsInterface) => {
     return {
       ...item,
