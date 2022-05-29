@@ -5,6 +5,8 @@ import { Chart } from 'react-google-charts';
 import { chartColors } from './config';
 import { useDeepMemo } from '@core';
 import _ from 'lodash';
+import { useWindowWidth } from '@react-hook/window-size';
+import { useEffect, useState } from 'react';
 
 const options = {
   colors: chartColors,
@@ -17,6 +19,7 @@ const ReportsWithPieChart = ({
   columnsNames,
   totalLabel = 'Total',
 }) => {
+  const [chartKey, setChartKey] = useState();
   const chartData = useDeepMemo(() => {
     const data = groupedReports.map((item) => {
       return [item.label, item.amount];
@@ -24,6 +27,14 @@ const ReportsWithPieChart = ({
     data.unshift(['Payments', 'amount']);
     return data;
   }, [groupedReports]);
+
+  const windowWidth = useWindowWidth();
+
+
+  //the google chart does not handle ok window resizes. We force a rerender when this happens
+  useEffect(() => {
+    setChartKey(new Date().toString());
+  }, [windowWidth]);
 
   return (
     <div className="mvp-pages-reports__content--with-chart-layout">
@@ -39,6 +50,7 @@ const ReportsWithPieChart = ({
       <div className="mvp-pages-reports__content--with-chart-layout__right">
         <ChartLegend groupedReports={groupedReports} />
         <Chart
+          key={chartKey}
           options={options}
           chartType="PieChart"
           data={chartData}

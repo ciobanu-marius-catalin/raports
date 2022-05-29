@@ -8,6 +8,13 @@
   font-size: 16px;
   color: var(--mvp-primary-color);
 
+  @include responsive-tablet {
+    --horizontal-spacing: 75px;
+  }
+  @include responsive-mobile {
+    --horizontal-spacing: 50px;
+  }
+
   &__header {
     height: 80px;
     flex: 0 0 auto;
@@ -53,7 +60,7 @@
 
   &__sidebar {
     height: 100%;
-    width: 100px;
+    width: var(--horizontal-spacing);
     flex: 0 0 auto;
 
     &__menu {

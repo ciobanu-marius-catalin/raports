@@ -6,17 +6,28 @@
 
   &--with-chart-layout {
       display: flex;
+      $spacing-value: 31px;
       &__left {
         flex: 0 0 57%;
         display: flex;
-        margin-right: 31px;
+        margin-right: $spacing-value;
         > * {
           flex: 1;
         }
       }
       &__right {
        flex: 1 0 0;
+
       }
+
+    @include responsive-mobile-and-tablet {
+      flex-direction: column;
+
+      .mvp-pages-reports__content--with-chart-layout__left {
+        margin-bottom: $spacing-value;
+        margin-right: 0;
+      }
+    }
   }
 
   .mvp-pages-reports__chart-legend-item {
