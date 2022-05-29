@@ -19,4 +19,4 @@ const ReportsAccordionTitle = ({ label, total }) => {
   );
 };
 
-export {ReportsAccordionTitle}
+export { ReportsAccordionTitle };

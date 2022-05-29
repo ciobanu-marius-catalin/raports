@@ -28,6 +28,16 @@
       display: flex;
       justify-content: flex-end;
       flex: 1 0 0;
+      align-items: center;
+
+      .sb-avatar__text {
+        font-family: 'Roboto', sans-serif !important;
+        font-weight: 700;
+      }
+      &__label {
+        margin-left: 11px;
+        font-weight: 700;
+      }
     }
     &__burger{
       cursor: pointer;

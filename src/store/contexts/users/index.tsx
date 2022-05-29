@@ -1,9 +1,9 @@
 import React, {
-    ReactElement,
-    useContext,
-    useState,
-    useEffect,
-    useCallback,
+  ReactElement,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
 } from 'react';
 import _ from 'lodash';
 import type { UserInterface, UserRepositoryInterface } from '@repositories';
@@ -11,78 +11,78 @@ import { useDeepMemo, useErrorCatcher } from '@core';
 import { useUserRepository } from '@repositories';
 
 interface UserContextProviderProps {
-    children: ReactElement;
+  children: ReactElement;
 }
 
 interface UserContextInterface {
-    user: UserInterface | null;
-    setContext: Function;
-    loadUser: Function;
+  user: UserInterface | null;
+  setContext: Function;
+  loadUser: Function;
 }
 
 const defaultContext: UserContextInterface = {
-    user: null,
-    setContext: _.noop,
-    loadUser: _.noop,
+  user: null,
+  setContext: _.noop,
+  loadUser: _.noop,
 };
 const UserContext = React.createContext(defaultContext);
 
 const UserContextProvider: React.FC<UserContextProviderProps> = ({
-                                                                     children,
-                                                                 }) => {
-    const { setError } = useErrorCatcher();
-    const [user, setInternalUser] = useState<UserInterface | null>(null);
+  children,
+}) => {
+  const { setError } = useErrorCatcher();
+  const [user, setInternalUser] = useState<UserInterface | null>(null);
 
-    const setUser: (newUser: UserInterface) => void = useCallback(
-        (newUser: UserInterface) => {
-            setInternalUser(newUser);
-            saveUserDataInCookie(newUser);
-        },
-        [setInternalUser]
-    );
+  const setUser: (newUser: UserInterface) => void = useCallback(
+    (newUser: UserInterface) => {
+      setInternalUser(newUser);
+      saveUserDataInCookie(newUser);
+    },
+    [setInternalUser]
+  );
 
-    const repository: UserRepositoryInterface = useUserRepository();
+  const repository: UserRepositoryInterface = useUserRepository();
 
-    const loadUser = useCallback(async () => {
-        const userId = getCurrentUserId();
-        try {
-            const userData: UserInterface | undefined = await repository.getItem(
-                userId
-            );
-            if (userData) {
-                setUser(userData);
-            }
-        } catch (e) {
-            setError(e);
-        }
-    }, [repository]);
+  const loadUser = useCallback(async () => {
+    const userId = getCurrentUserId();
+    try {
+      const userData: UserInterface | undefined = await repository.getItem(
+        userId
+      );
+      if (userData) {
+        setUser(userData);
+      }
+    } catch (e) {
+      setError(e);
+    }
+  }, [repository]);
 
-    const contextValue = useDeepMemo(() => {
-        return {
-            user,
-            setUser,
-            loadUser,
-        };
-    }, [user, setUser]);
+  const contextValue = useDeepMemo(() => {
+    return {
+      user,
+      setUser,
+      loadUser,
+    };
+  }, [user, setUser]);
 
-    //on mounted we refresh the data
-    useEffect(() => {
-        loadUser();
-    }, []);
+  //on mounted we refresh the data
+  useEffect(() => {
+    loadUser();
+  }, []);
 
-    return (
-        <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
+  );
 };
 
 function useUserContext() {
-    const context = useContext(UserContext);
+  const context = useContext(UserContext);
 
-    return context;
+  return context;
 }
 
 function getCurrentUserId() {
-    return 'rahej';
+  return 'rahej';
 }
 
 /**

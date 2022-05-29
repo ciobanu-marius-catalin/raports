@@ -35,33 +35,35 @@ const ReportsFilters: FC = () => {
   }, [commonDateProps, startDate]);
   return (
     <div className="mvp-pages-reports__header__filters">
-      <Select
-        value={getFilter('project')}
-        onChange={setFilter('project')}
-        options={projectOptions}
-        placeholder="Select project"
-      />
-      <Select
-        value={getFilter('gateway')}
-        onChange={setFilter('gateway')}
-        options={gatewayOptions}
-        placeholder="Select gateway"
-      />
-      <DatePicker
-        value={getFilter('startDate')}
-        onChange={setFilter('startDate')}
-        placeholderText="From date"
-        {...startDateProps}
-        placeholderOpenToDate={commonDateProps.minDate}
-      />
-      <DatePicker
-        value={getFilter('endDate')}
-        onChange={setFilter('endDate')}
-        placeholderText="To date"
-        {...endDateProps}
-        placeholderOpenToDate={commonDateProps.maxDate}
-      />
-      <Button onClick={loadReports}>Generate report</Button>
+      <div className="mvp-pages-reports__header__filters__inner">
+        <Select
+          value={getFilter('project')}
+          onChange={setFilter('project')}
+          options={projectOptions}
+          placeholder="Select project"
+        />
+        <Select
+          value={getFilter('gateway')}
+          onChange={setFilter('gateway')}
+          options={gatewayOptions}
+          placeholder="Select gateway"
+        />
+        <DatePicker
+          value={getFilter('startDate')}
+          onChange={setFilter('startDate')}
+          placeholderText="From date"
+          {...startDateProps}
+          placeholderOpenToDate={commonDateProps.minDate}
+        />
+        <DatePicker
+          value={getFilter('endDate')}
+          onChange={setFilter('endDate')}
+          placeholderText="To date"
+          {...endDateProps}
+          placeholderOpenToDate={commonDateProps.maxDate}
+        />
+        <Button onClick={loadReports}>Generate report</Button>
+      </div>
     </div>
   );
 };

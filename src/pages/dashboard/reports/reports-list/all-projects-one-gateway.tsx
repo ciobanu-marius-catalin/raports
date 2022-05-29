@@ -12,7 +12,7 @@ const AllProjectsOneGateway = () => {
       groupedReports={groupedReports}
       totalSum={totalSum}
       columnsNames={columnsNamesWithoutGateway}
-      totalLabel="PROJECTS TOTAL"
+      totalLabel="GATEWAY TOTAL"
     />
   );
 };

@@ -13,6 +13,7 @@ function ReportsPage(): ReactNode {
         <ReportsDataProvider>
           <div className="mvp-pages-reports">
             <PageHeader />
+
             <PageContent />
           </div>
         </ReportsDataProvider>

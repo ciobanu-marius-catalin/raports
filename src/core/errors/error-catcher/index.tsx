@@ -5,9 +5,11 @@ import React, {
   useMemo,
   useState,
   ReactNode,
+  useEffect,
 } from 'react';
+import { useRouter } from 'next/router';
 
-interface ErrorInterface {
+export interface ErrorInterface {
   errorMessage?: string | null;
   statusCode?: number | null;
 }
@@ -33,7 +35,8 @@ const ErrorCatcherContext = createContext(defaultValue);
 
 const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [error, setInternalError] = useState<ErrorInterface | null>(null);
-
+  const router = useRouter();
+  const pathname = router?.pathname;
   const setError = useCallback(
     (e: any) => {
       console.error(e);
@@ -41,7 +44,7 @@ const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
       const data = response?.data;
       const newError: ErrorInterface = {
         statusCode: response?.status,
-        errorMessage: data?.error,
+        errorMessage: data?.error || 'Something went wrong, please try again later',
       };
       setInternalError(newError);
     },
@@ -51,6 +54,11 @@ const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
   const clearError = useCallback(() => {
     setInternalError(null);
   }, [setInternalError]);
+
+  //clear errors on page change
+  useEffect(() => {
+    clearError();
+  }, [pathname]);
 
   const context: ErrorCatcherContextInterface = useMemo(() => {
     return {

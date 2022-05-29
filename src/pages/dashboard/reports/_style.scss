@@ -9,6 +9,7 @@
   flex-direction: column;
   &__header {
     display: flex;
+    flex-wrap: wrap;
 
     &__filters {
       display: flex;

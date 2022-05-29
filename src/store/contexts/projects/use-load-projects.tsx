@@ -5,7 +5,7 @@ import { useProjectsRepository } from '@repositories';
 import type { OptionInterface } from '@components';
 import { ALL_ITEMS_VALUE } from '@core';
 import type { ProjectContextInterface } from './index';
-import _ from "lodash";
+import _ from 'lodash';
 
 const useLoadProjects = () => {
   const { setError } = useErrorCatcher();

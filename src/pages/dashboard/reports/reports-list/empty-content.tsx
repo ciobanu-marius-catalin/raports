@@ -1,3 +1,5 @@
+import {Exception} from "sass";
+
 const EmptyContent = () => {
   return (
     <div className="mvp-pages-reports__content--empty">

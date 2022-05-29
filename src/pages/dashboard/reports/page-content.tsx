@@ -6,13 +6,20 @@ import {
   REPORTS_LIST_TYPES_VALUES,
   REPORTS_LIST_COMPONENTS_BY_TYPE,
 } from './config';
-import { useDeepMemo } from '@core';
+import { ErrorBoundry, useErrorCatcher } from '@core';
+import { Alert } from '@components';
 
 const PageContent = () => {
-  const Content = useGetReportsComponent();
+  const { error } = useErrorCatcher();
+  const Content: FC = useGetReportsComponent();
   return (
     <div className="mvp-pages-reports__content">
-      <Content />
+      {error?.errorMessage && (
+        <Alert variant="danger">{error?.errorMessage}</Alert>
+      )}
+      <ErrorBoundry>
+        <Content />
+      </ErrorBoundry>
     </div>
   );
 };
@@ -22,9 +29,7 @@ function useGetReportsComponent(): FC {
 
   const { project, gateway } = activeFilters;
 
-
   const ContentComponent: FC = useMemo(() => {
-  
     const EmptyComponent =
       REPORTS_LIST_COMPONENTS_BY_TYPE[REPORTS_LIST_TYPES_VALUES.EMPTY];
 

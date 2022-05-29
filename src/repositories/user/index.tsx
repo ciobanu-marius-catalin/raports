@@ -24,7 +24,7 @@ function useUserRepository(): UserRepositoryInterface {
       const mergedPath = `/users`;
       const item = await axios.get(mergedPath);
       const users = item?.data?.data || [];
-      return users.find((user) => user?.id === id);
+      return users.find((user) => user?.userId === id);
     },
     []
   );
