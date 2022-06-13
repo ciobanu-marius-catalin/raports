@@ -3,6 +3,7 @@ import { useReportsData } from '../reports-data-context';
 import _ from 'lodash';
 import { ReportsInterface } from '@repositories';
 import type { ReportsDataInterface } from '../reports-data-context';
+import moment from 'moment';
 
 export interface GroupedReportsInterface {
   label: string;
@@ -59,7 +60,12 @@ const useGetGroupedData = ({ groupByKey }: Params): GroupedDataInterface => {
       const sortedGroups = _.sortBy(groups, (item) => item.label);
       sortedGroups.forEach((group) => {
         const groupItems = _.get(group, 'items', []);
-        const sortedGroupItems = _.sortBy(groupItems, (item) => item.created);
+        const sortedGroupItems = _.sortBy(groupItems, (item) => {
+          const date = moment(item.created, 'DD/MM/YYYY');
+
+          const formattedDate = date.format('YYYY-MM-DD');
+          return formattedDate;
+        });
         _.set(group, 'items', sortedGroupItems);
       });
 
